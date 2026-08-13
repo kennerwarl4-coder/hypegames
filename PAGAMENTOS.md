@@ -7,7 +7,7 @@
 3. Front-end chama `POST /api/checkout/create` só com `produtoId` + dados do cliente (nunca envia preço).
 4. `create.js` resolve o preço pelo catálogo do servidor (`api/_lib/products.json`), gera um `identifier` (UUID), salva no KV como `CREATING`, chama a SigiloPay (`POST /gateway/pix/receive`) e salva o resultado.
 5. Front-end recebe o QR Code/copia-e-cola e começa a consultar `GET /api/checkout/status?id=...` a cada 5s — **isso só lê o KV, nunca chama a SigiloPay diretamente** (a doc deles proíbe polling frequente).
-6. Quando o pagamento é confirmado, a SigiloPay chama `POST /api/webhooks/sigilopay` (evento `TRANSACTION_PAID`) com o `callbackUrl` fixo configurado em `SIGILOPAY_WEBHOOK_URL`. O webhook valida o token, deduplica o evento e atualiza o KV. O status muda pra `PAID` e o polling do front-end mostra a confirmação.
+6. Quando o pagamento é confirmado, a SigiloPay chama `POST /api/webhooks/sigilopay` (evento `TRANSACTION_PAID`) com o `callbackUrl` fixo configurado em `SIGILOPAY_WEBHOOK_URL`. O webhook confere se o `identifier` já existe no KV (defesa contra eventos forjados — ver Segurança), deduplica o evento e atualiza o status. O status muda pra `PAID` e o polling do front-end mostra a confirmação.
 
 A cobrança criada **não** é pagamento confirmado — só o webhook confirma.
 
@@ -27,8 +27,8 @@ npx vercel dev
 3. Settings → Environment Variables → adicionar (valores reais, nunca no Git):
    - `SIGILOPAY_PUBLIC_KEY`
    - `SIGILOPAY_SECRET_KEY`
-   - `SIGILOPAY_WEBHOOK_TOKEN`
    - `SIGILOPAY_WEBHOOK_URL` = `https://SEU-DOMINIO/api/webhooks/sigilopay`
+   - `SIGILOPAY_WEBHOOK_TOKEN` — **opcional**, deixe vazio (ver Segurança abaixo).
 4. Configurar esse mesmo `SIGILOPAY_WEBHOOK_URL` como callback no painel da SigiloPay, se eles pedirem cadastro manual do webhook (a doc menciona limite de 20 webhooks por integração).
 
 ## Decisões e suposições
@@ -41,6 +41,7 @@ npx vercel dev
 | Erro de timeout/rede marca o pagamento como `UNKNOWN`, não `FAILED` | A doc avisa que um timeout pode não significar que a cobrança falhou do lado deles — não decidimos por um estado definitivo sem confirmação. |
 | Sem suíte de testes automatizados nesta entrega | Combinado com você: entregar o fluxo funcionando primeiro, testes ficam pra uma próxima etapa. |
 | Sem endpoint de conciliação administrativa (`GET /gateway/transactions`) exposto | O cliente `getTransaction()` já existe em `api/_lib/sigilopay.js`, mas não criei rota nem UI admin pra isso ainda — fora do escopo combinado por ora. |
+| Webhook não exige `SIGILOPAY_WEBHOOK_TOKEN` | O painel da SigiloPay (nesta conta) não expõe nenhum token de webhook configurável, e integrações anteriores nunca precisaram disso. A autenticidade passou a depender de o `identifier` (UUID) já existir no KV — eventos para identifiers desconhecidos são ignorados, não processados. Se a SigiloPay disponibilizar um token no futuro, é só preencher a env var que a validação volta a ser exigida. |
 
 ## Pontos a confirmar com a SigiloPay
 
@@ -50,10 +51,10 @@ npx vercel dev
 - Política de expiração do QR Code Pix (não documentada no trecho que recebi).
 - Existência de ambiente sandbox/homologação separado.
 - Rate limit da API (não documentado no trecho que recebi).
-- Se o `SIGILOPAY_WEBHOOK_TOKEN` é rotacionável e como.
 
 ## Segurança
 
 - `SIGILOPAY_SECRET_KEY` só existe no servidor (variáveis de ambiente da Vercel) — nunca é enviada ao navegador.
 - `x-secret-key`, CPF completo e o corpo bruto de requests/webhooks nunca são logados nem retornados em nenhuma resposta HTTP.
 - O checkout público nunca consulta a SigiloPay diretamente para status — só o webhook escreve status de pagamento.
+- **Webhook sem token**: a conta não tem um token de webhook configurável na SigiloPay, então `/api/webhooks/sigilopay` não exige um. A proteção contra eventos forjados é: só atualiza pagamentos cujo `identifier` (UUID de 122 bits, gerado por `crypto.randomUUID()`) já existe no KV — criado por nós em `create.js` antes de chamar a SigiloPay. Um identifier desconhecido é ignorado. Isso não é tão forte quanto um HMAC/token dedicado (não protege contra alguém que descubra um identifier real em trânsito, por exemplo), mas cobre o risco prático de forjar pagamentos "do nada". Se a SigiloPay passar a oferecer um token de webhook, basta preencher `SIGILOPAY_WEBHOOK_TOKEN` que a validação extra volta a ser aplicada automaticamente.

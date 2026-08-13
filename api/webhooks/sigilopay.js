@@ -63,14 +63,20 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  // A doc confirma que o token serve para validar autenticidade, mas NÃO
-  // documenta uma assinatura HMAC — não inventamos uma. Apenas comparação de
-  // token, em tempo constante, contra SIGILOPAY_WEBHOOK_TOKEN.
+  // A conta do usuário não expõe nenhum "token de webhook" configurável no
+  // painel da SigiloPay (confirmado por integrações anteriores dele) — então
+  // NÃO exigimos esse campo. Se um dia SIGILOPAY_WEBHOOK_TOKEN for definido
+  // (por exemplo se a SigiloPay passar a fornecer um), validamos contra ele;
+  // caso contrário, a autenticidade depende de o `identifier` já existir no
+  // nosso KV (ver checagem abaixo) — um UUID de 122 bits gerado por nós,
+  // impraticável de adivinhar.
   const expectedToken = process.env.SIGILOPAY_WEBHOOK_TOKEN;
-  const receivedToken = event.token;
-  if (!expectedToken || !receivedToken || !timingSafeEqualStr(receivedToken, expectedToken)) {
-    res.status(401).json({ errorCode: 'GATEWAY_UNAUTHENTICATED', message: 'Token inválido.' });
-    return;
+  if (expectedToken) {
+    const receivedToken = event.token;
+    if (!receivedToken || !timingSafeEqualStr(receivedToken, expectedToken)) {
+      res.status(401).json({ errorCode: 'GATEWAY_UNAUTHENTICATED', message: 'Token inválido.' });
+      return;
+    }
   }
 
   if (!VALID_EVENTS.has(event.event)) {
@@ -96,11 +102,14 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const existing = (await getPayment(paymentKeyId)) || {
-    identifier: paymentKeyId,
-    status: 'UNKNOWN',
-    createdAt: new Date().toISOString()
-  };
+  const existing = await getPayment(paymentKeyId);
+  if (!existing) {
+    // Sem token de validação, esta é a nossa principal defesa contra eventos
+    // forjados: só atualizamos pagamentos que NÓS criamos (identifier
+    // conhecido no KV). Um identifier desconhecido é ignorado, não criado.
+    res.status(200).json({ ok: true, ignored: true, reason: 'unknown identifier' });
+    return;
+  }
 
   // Nunca regride um pagamento já confirmado para um estado anterior
   // (exceto reembolso/chargeback, que são estados posteriores legítimos).
