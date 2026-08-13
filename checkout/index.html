@@ -130,32 +130,43 @@
     box.innerHTML = html;
   }
 
-  function pollStatus(identifier){
+  function pollStatus(transactionId){
     var stopped = false;
+    var attempts = 0;
+    var MAX_ATTEMPTS = 60;
     function tick(){
       if(stopped) return;
-      fetch('/api/checkout/status?id=' + encodeURIComponent(identifier))
+      attempts++;
+      fetch('/api/checkout/status?transactionId=' + encodeURIComponent(transactionId))
         .then(function(r){ return r.json(); })
         .then(function(data){
           if(stopped) return;
-          if(data.status === 'PAID'){
+          if(data.status === 'COMPLETED' || data.status === 'OK'){
             stopped = true;
             showPaymentMessage('<div class="bg-brand-green-300 text-zinc-900 font-bold rounded-md p-4 text-center">Pagamento confirmado! Seu produto ja esta sendo entregue.</div>');
             return;
           }
-          if(data.status === 'FAILED' || data.status === 'CANCELED' || data.status === 'REJECTED'){
+          if(data.status === 'FAILED' || data.status === 'CANCELED' || data.status === 'REJECTED' || data.status === 'REFUNDED' || data.status === 'CHARGED_BACK'){
             stopped = true;
             showPaymentMessage('<div class="bg-red-500 text-white font-bold rounded-md p-4 text-center">Pagamento nao concluido (' + data.status + '). Tente novamente.</div>');
             return;
           }
+          if(attempts >= MAX_ATTEMPTS){
+            stopped = true;
+            showPaymentMessage('<div class="bg-brand-green-600 border border-brand-green-500 rounded-md p-4 text-center text-sm">Ainda aguardando confirmacao do pagamento. Se voce ja pagou, isso pode levar mais alguns instantes para atualizar.</div>');
+            return;
+          }
           setTimeout(tick, 5000);
         })
-        .catch(function(){ setTimeout(tick, 5000); });
+        .catch(function(){
+          if(attempts >= MAX_ATTEMPTS){ stopped = true; return; }
+          setTimeout(tick, 5000);
+        });
     }
     setTimeout(tick, 5000);
   }
 
-  function renderPix(pix, identifier){
+  function renderPix(pix, transactionId){
     var img = pix && (pix.base64 ? ('data:image/png;base64,' + pix.base64) : pix.image);
     var code = (pix && pix.code) || '';
     var html = ''
@@ -175,7 +186,7 @@
         setTimeout(function(){ copyBtn.textContent = 'Copiar codigo Pix'; }, 2000);
       });
     }
-    pollStatus(identifier);
+    pollStatus(transactionId);
   }
 
   function showFormError(msg){
@@ -235,7 +246,7 @@
         showPaymentMessage('<div class="bg-red-500 text-white font-bold rounded-md p-4 text-center">' + (res.data.message || 'Nao foi possivel gerar o Pix. Tente novamente.') + '</div>');
         return;
       }
-      renderPix(res.data.pix, res.data.identifier);
+      renderPix(res.data.pix, res.data.transactionId);
     })
     .catch(function(){
       if(btn){ btn.disabled = false; btn.style.opacity = ''; }

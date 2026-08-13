@@ -2,8 +2,5 @@
   "name": "hypergames-checkout",
   "private": true,
   "version": "1.0.0",
-  "description": "Site estático + serverless functions (Vercel) para o checkout e integração Pix com a SigiloPay.",
-  "dependencies": {
-    "@vercel/kv": "^2.0.0"
-  }
+  "description": "Site estático + serverless functions (Vercel) para o checkout e integração Pix com a SigiloPay."
 }

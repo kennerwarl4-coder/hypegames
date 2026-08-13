@@ -93,8 +93,11 @@ async function createPixCharge(payload) {
 }
 
 // GET /gateway/transactions?id=... ou ?clientIdentifier=...
-// USO RESTRITO: conciliação manual/administrativa. A documentação alerta contra
-// usar essa rota para polling frequente — o checkout público NUNCA deve chamar isto.
+// Usado por api/checkout/status.js para o checkout saber se o Pix já foi
+// pago. A doc da SigiloPay sugere não fazer polling frequente aqui — o
+// front-end consulta a cada 5s enquanto a tela de pagamento está aberta,
+// com um limite de tentativas (ver checkout/index.html), o que é um
+// meio-termo aceitável sem precisar de banco de dados/infra extra.
 async function getTransaction(params) {
   const query = new URLSearchParams();
   if (params && params.transactionId) query.set('id', params.transactionId);
