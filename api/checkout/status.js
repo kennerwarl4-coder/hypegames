@@ -6,6 +6,15 @@ const { getPayment } = require('../_lib/kv');
 // Isso NUNCA chama a SigiloPay diretamente — a doc deles proíbe polling
 // frequente na rota de consulta. A fonte de verdade real é o webhook.
 module.exports = async function handler(req, res) {
+  try {
+    return await handleStatus(req, res);
+  } catch (err) {
+    console.error('Erro inesperado em /api/checkout/status', err);
+    res.status(500).json({ errorCode: 'INTERNAL_ERROR', message: 'Erro inesperado no servidor.' });
+  }
+};
+
+async function handleStatus(req, res) {
   if (req.method !== 'GET') {
     res.status(405).json({ errorCode: 'METHOD_NOT_ALLOWED', message: 'Use GET.' });
     return;
@@ -30,4 +39,4 @@ module.exports = async function handler(req, res) {
     transactionId: payment.transactionId || null,
     paidAt: payment.paidAt || null
   });
-};
+}

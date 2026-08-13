@@ -44,6 +44,17 @@ function extractIds(event) {
 }
 
 module.exports = async function handler(req, res) {
+  try {
+    return await handleWebhook(req, res);
+  } catch (err) {
+    console.error('Erro inesperado em /api/webhooks/sigilopay', err);
+    // Erro não-2xx aqui é intencional: sinaliza pra SigiloPay reenviar depois
+    // (ver regra "erro transitório antes da persistência -> não-2xx").
+    res.status(500).json({ errorCode: 'INTERNAL_ERROR', message: 'Erro inesperado no servidor.' });
+  }
+};
+
+async function handleWebhook(req, res) {
   if (req.method !== 'POST') {
     res.status(405).end();
     return;
@@ -131,4 +142,4 @@ module.exports = async function handler(req, res) {
   await savePayment(paymentKeyId, updated);
 
   res.status(200).json({ ok: true });
-};
+}

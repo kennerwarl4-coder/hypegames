@@ -10,6 +10,18 @@ function sendError(res, status, errorCode, message, details) {
 }
 
 module.exports = async function handler(req, res) {
+  try {
+    return await handleCreate(req, res);
+  } catch (err) {
+    // Rede de segurança: nunca deixa a função travar sem resposta (isso vira
+    // um FUNCTION_INVOCATION_FAILED opaco no cliente). Loga o erro real nos
+    // logs da Vercel e devolve um JSON limpo em vez de derrubar a função.
+    console.error('Erro inesperado em /api/checkout/create', err);
+    return sendError(res, 500, 'INTERNAL_ERROR', 'Erro inesperado no servidor. Tente novamente em instantes.');
+  }
+};
+
+async function handleCreate(req, res) {
   if (req.method !== 'POST') {
     return sendError(res, 405, 'METHOD_NOT_ALLOWED', 'Use POST.');
   }
@@ -113,4 +125,4 @@ module.exports = async function handler(req, res) {
     status: result.status,
     pix: result.pix
   });
-};
+}
