@@ -1,0 +1,194 @@
+[
+  {
+    "id": "91001",
+    "nome": "Gift Card Google Play R$ 20,00 - Cartão Presente Digital",
+    "precoCents": 1000,
+    "precoOriginalCents": 2000
+  },
+  {
+    "id": "91002",
+    "nome": "Gift Card Google Play R$ 30,00 - Cartão Presente Digital",
+    "precoCents": 1500,
+    "precoOriginalCents": 3000
+  },
+  {
+    "id": "91003",
+    "nome": "Gift Card Google Play R$ 50,00 - Cartão Presente Digital",
+    "precoCents": 2500,
+    "precoOriginalCents": 5000
+  },
+  {
+    "id": "91004",
+    "nome": "Gift Card Google Play R$ 80,00 - Cartão Presente Digital",
+    "precoCents": 4000,
+    "precoOriginalCents": 8000
+  },
+  {
+    "id": "91005",
+    "nome": "Gift Card Google Play R$ 100,00 - Cartão Presente Digital",
+    "precoCents": 5000,
+    "precoOriginalCents": 10000
+  },
+  {
+    "id": "91006",
+    "nome": "Gift Card Google Play R$ 150,00 - Cartão Presente Digital",
+    "precoCents": 7500,
+    "precoOriginalCents": 15000
+  },
+  {
+    "id": "91007",
+    "nome": "Gift Card Google Play R$ 200,00 - Cartão Presente Digital",
+    "precoCents": 10000,
+    "precoOriginalCents": 20000
+  },
+  {
+    "id": "91008",
+    "nome": "Gift Card Google Play R$ 300,00 - Cartão Presente Digital",
+    "precoCents": 15000,
+    "precoOriginalCents": 30000
+  },
+  {
+    "id": "27710",
+    "nome": "Gift Card Outback - R$300",
+    "precoCents": 13500,
+    "precoOriginalCents": 27000
+  },
+  {
+    "id": "27709",
+    "nome": "Gift Card Outback - R$200",
+    "precoCents": 9000,
+    "precoOriginalCents": 18000
+  },
+  {
+    "id": "27708",
+    "nome": "Gift Card Outback - R$150",
+    "precoCents": 6750,
+    "precoOriginalCents": 13500
+  },
+  {
+    "id": "27707",
+    "nome": "Gift Card Outback - R$100",
+    "precoCents": 4500,
+    "precoOriginalCents": 9000
+  },
+  {
+    "id": "28017",
+    "nome": "Microsoft Xbox Game Pass Essential 6M",
+    "precoCents": 8320,
+    "precoOriginalCents": 16641
+  },
+  {
+    "id": "28020",
+    "nome": "Microsoft Xbox Game Pass Essential 12M",
+    "precoCents": 16196,
+    "precoOriginalCents": 32391
+  },
+  {
+    "id": "28015",
+    "nome": "Microsoft Xbox Game Pass Premium 3M",
+    "precoCents": 8095,
+    "precoOriginalCents": 16191
+  },
+  {
+    "id": "28013",
+    "nome": "Microsoft Xbox Game Pass Ultimate 3M",
+    "precoCents": 11500,
+    "precoOriginalCents": 22999
+  },
+  {
+    "id": "21745",
+    "nome": "Recarga Free Fire - 1.060 Diamantes +10% de Bônus",
+    "precoCents": 2137,
+    "precoOriginalCents": 4274
+  },
+  {
+    "id": "21746",
+    "nome": "Recarga Free Fire - 2.180 Diamantes +10% de Bônus",
+    "precoCents": 4180,
+    "precoOriginalCents": 8359
+  },
+  {
+    "id": "21747",
+    "nome": "Recarga Free Fire - 5.600 Diamantes +10% de Bônus",
+    "precoCents": 9975,
+    "precoOriginalCents": 19949
+  },
+  {
+    "id": "27992",
+    "nome": "Recarga Free Fire - 22.400 Diamantes +10% de Bônus",
+    "precoCents": 39898,
+    "precoOriginalCents": 79796
+  },
+  {
+    "id": "27326",
+    "nome": "Clair Obscur: Expedition 33",
+    "precoCents": 5945,
+    "precoOriginalCents": 11890
+  },
+  {
+    "id": "26630",
+    "nome": "HELLDIVERS™ 2",
+    "precoCents": 6145,
+    "precoOriginalCents": 12290
+  },
+  {
+    "id": "26093",
+    "nome": "Scorn",
+    "precoCents": 545,
+    "precoOriginalCents": 1090
+  },
+  {
+    "id": "27422",
+    "nome": "REMATCH",
+    "precoCents": 1780,
+    "precoOriginalCents": 3560
+  },
+  {
+    "id": "26698",
+    "nome": "R$20 League of Legends - PC - Cartão Presente Digital [Exclusivo Brasil]",
+    "precoCents": 960,
+    "precoOriginalCents": 1920
+  },
+  {
+    "id": "26694",
+    "nome": "R$50 League of Legends - PC -Cartão Presente Digital [Exclusivo Brasil]",
+    "precoCents": 2400,
+    "precoOriginalCents": 4800
+  },
+  {
+    "id": "26696",
+    "nome": "R$50 Valorant - Cartão Presente Digital [Exclusivo Brasil]",
+    "precoCents": 2400,
+    "precoOriginalCents": 4800
+  },
+  {
+    "id": "26703",
+    "nome": "R$40 Roblox - Cartão Presente Digital [Exclusivo Brasil]",
+    "precoCents": 1900,
+    "precoOriginalCents": 3800
+  },
+  {
+    "id": "19647",
+    "nome": "Tom Clancy's Ghost Recon Wildlands - Standard Edition",
+    "precoCents": 600,
+    "precoOriginalCents": 1199
+  },
+  {
+    "id": "20226",
+    "nome": "Tom Clancy's Ghost Recon Breakpoint - Standard Edition",
+    "precoCents": 447,
+    "precoOriginalCents": 895
+  },
+  {
+    "id": "19753",
+    "nome": "FAR CRY 3 - Standard Edition",
+    "precoCents": 750,
+    "precoOriginalCents": 1500
+  },
+  {
+    "id": "19301",
+    "nome": "Far Cry 5 - Gold Edition",
+    "precoCents": 1950,
+    "precoOriginalCents": 3900
+  }
+]
