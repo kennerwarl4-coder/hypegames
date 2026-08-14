@@ -74,25 +74,25 @@
   {
     "id": "27710",
     "nome": "Gift Card Outback - R$300",
-    "precoCents": 13500,
+    "precoCents": 15000,
     "precoOriginalCents": 30000
   },
   {
     "id": "27709",
     "nome": "Gift Card Outback - R$200",
-    "precoCents": 9000,
+    "precoCents": 10000,
     "precoOriginalCents": 20000
   },
   {
     "id": "27708",
     "nome": "Gift Card Outback - R$150",
-    "precoCents": 6750,
+    "precoCents": 7500,
     "precoOriginalCents": 15000
   },
   {
     "id": "27707",
     "nome": "Gift Card Outback - R$100",
-    "precoCents": 4500,
+    "precoCents": 5000,
     "precoOriginalCents": 10000
   },
   {
@@ -122,19 +122,19 @@
   {
     "id": "28017",
     "nome": "Microsoft Xbox Game Pass Essential 6M",
-    "precoCents": 8320,
+    "precoCents": 9245,
     "precoOriginalCents": 18490
   },
   {
     "id": "28020",
     "nome": "Microsoft Xbox Game Pass Essential 12M",
-    "precoCents": 16196,
+    "precoCents": 17995,
     "precoOriginalCents": 35990
   },
   {
     "id": "28015",
     "nome": "Microsoft Xbox Game Pass Premium 3M",
-    "precoCents": 8095,
+    "precoCents": 8995,
     "precoOriginalCents": 17990
   },
   {
@@ -146,25 +146,25 @@
   {
     "id": "21745",
     "nome": "Recarga Free Fire - 1.060 Diamantes +10% de Bônus",
-    "precoCents": 2137,
+    "precoCents": 2250,
     "precoOriginalCents": 4499
   },
   {
     "id": "21746",
     "nome": "Recarga Free Fire - 2.180 Diamantes +10% de Bônus",
-    "precoCents": 4180,
+    "precoCents": 4400,
     "precoOriginalCents": 8799
   },
   {
     "id": "21747",
     "nome": "Recarga Free Fire - 5.600 Diamantes +10% de Bônus",
-    "precoCents": 9975,
+    "precoCents": 10500,
     "precoOriginalCents": 20999
   },
   {
     "id": "27992",
     "nome": "Recarga Free Fire - 22.400 Diamantes +10% de Bônus",
-    "precoCents": 39898,
+    "precoCents": 41998,
     "precoOriginalCents": 83996
   },
   {
@@ -218,25 +218,25 @@
   {
     "id": "26698",
     "nome": "R$20 League of Legends - PC - Cartão Presente Digital [Exclusivo Brasil]",
-    "precoCents": 960,
+    "precoCents": 1000,
     "precoOriginalCents": 2000
   },
   {
     "id": "26694",
     "nome": "R$50 League of Legends - PC -Cartão Presente Digital [Exclusivo Brasil]",
-    "precoCents": 2400,
+    "precoCents": 2500,
     "precoOriginalCents": 5000
   },
   {
     "id": "26696",
     "nome": "R$50 Valorant - Cartão Presente Digital [Exclusivo Brasil]",
-    "precoCents": 2400,
+    "precoCents": 2500,
     "precoOriginalCents": 5000
   },
   {
     "id": "26703",
     "nome": "R$40 Roblox - Cartão Presente Digital [Exclusivo Brasil]",
-    "precoCents": 1900,
+    "precoCents": 2000,
     "precoOriginalCents": 4000
   },
   {
