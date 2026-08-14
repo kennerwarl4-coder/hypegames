@@ -3278,8 +3278,7 @@
             <circle cx=8 cy=21 r=1></circle>
             <circle cx=19 cy=21 r=1></circle>
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-          </svg><span
-            class="bg-red-500 rounded-full size-5 absolute top-0 right-0 text-xs flex items-center justify-center translate-x-1/2 -translate-y-1/2">1</span></button>
+          </svg></button>
       </div>
     </div>
     <div class="pt-20 lg:pt-28">
@@ -5459,18 +5458,18 @@
       }
 
       function setupComprarButtons() {
-        document.querySelectorAll('button').forEach(function (btn) {
-          if (btn.textContent.trim() !== 'COMPRAR' || btn.dataset.checkoutWired) return;
-          btn.dataset.checkoutWired = '1';
-          var li = btn.closest('li');
-          if (!li) return;
+        document.querySelectorAll('li.shadow-md').forEach(function (li) {
+          if (li.dataset.cardWired) return;
           var idEl = li.querySelector('p.sf-hidden');
           var produtoId = idEl ? idEl.textContent.trim() : '';
+          if (!produtoId) return;
+          li.dataset.cardWired = '1';
           var imgEl = li.querySelector('img');
           var tituloEl = li.querySelector('h2');
           var precoEl = li.querySelector('p.text-brand-green-300');
           var precoOriginalEl = li.querySelector('span.line-through');
-          btn.addEventListener('click', function () {
+          li.style.cursor = 'pointer';
+          li.addEventListener('click', function () {
             var produto = {
               id: produtoId,
               nome: tituloEl ? tituloEl.textContent.trim() : '',
@@ -5479,7 +5478,7 @@
               imagem: imgEl ? imgEl.src : ''
             };
             try { sessionStorage.setItem('checkoutProduto', JSON.stringify(produto)); } catch (e) { }
-            window.location.href = 'checkout/index.html' + (produtoId ? ('?produto=' + encodeURIComponent(produtoId)) : '');
+            window.location.href = 'checkout/index.html?produto=' + encodeURIComponent(produtoId);
           });
         });
       }
