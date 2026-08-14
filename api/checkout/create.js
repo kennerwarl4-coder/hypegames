@@ -51,8 +51,8 @@ async function handleCreate(req, res) {
   if (!produtoId) {
     return sendError(res, 400, 'GATEWAY_INVALID_ARGUMENT', 'produtoId é obrigatório.');
   }
-  if (!client.name || !client.email || !client.document) {
-    return sendError(res, 400, 'GATEWAY_INVALID_ARGUMENT', 'Nome, email e CPF são obrigatórios.');
+  if (!client.name || !client.email || !client.document || !client.phone) {
+    return sendError(res, 400, 'GATEWAY_INVALID_ARGUMENT', 'Nome, email, CPF e telefone são obrigatórios.');
   }
 
   // Preço nunca vem do cliente: resolvido pelo catálogo confiável do servidor
@@ -78,7 +78,7 @@ async function handleCreate(req, res) {
       client: {
         name: client.name,
         email: client.email,
-        phone: client.phone || undefined,
+        phone: client.phone,
         document: client.document
       },
       products: [{ id: produto.id, name: produto.nome, quantity: 1, price: amount }],
