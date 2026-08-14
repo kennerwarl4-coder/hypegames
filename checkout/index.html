@@ -102,91 +102,9 @@
   document.addEventListener('DOMContentLoaded', init);
   if(document.readyState !== 'loading'){ init(); }
 })();</script><script>(function(){
-  function byText(selector, text){
-    return Array.prototype.filter.call(document.querySelectorAll(selector), function(el){
-      return el.textContent.trim() === text;
-    })[0];
-  }
-
   function getFormValue(name){
     var el = document.querySelector('[name=' + name + ']');
     return el ? el.value.trim() : '';
-  }
-
-  function paymentPanel(){
-    return document.getElementById('checkout-dados-card');
-  }
-
-  function showPaymentMessage(html){
-    var panel = paymentPanel();
-    if(!panel) return;
-    var box = document.getElementById('pixResultBox');
-    if(!box){
-      box = document.createElement('div');
-      box.id = 'pixResultBox';
-      box.className = 'mt-6';
-      panel.appendChild(box);
-    }
-    box.innerHTML = html;
-  }
-
-  function pollStatus(transactionId){
-    var stopped = false;
-    var attempts = 0;
-    var MAX_ATTEMPTS = 60;
-    function tick(){
-      if(stopped) return;
-      attempts++;
-      fetch('/api/checkout/status?transactionId=' + encodeURIComponent(transactionId))
-        .then(function(r){ return r.json(); })
-        .then(function(data){
-          if(stopped) return;
-          if(data.status === 'COMPLETED' || data.status === 'OK'){
-            stopped = true;
-            showPaymentMessage('<div class="bg-brand-green-300 text-zinc-900 font-bold rounded-md p-4 text-center">Pagamento confirmado! Seu produto ja esta sendo entregue.</div>');
-            return;
-          }
-          if(data.status === 'FAILED' || data.status === 'CANCELED' || data.status === 'REJECTED' || data.status === 'REFUNDED' || data.status === 'CHARGED_BACK'){
-            stopped = true;
-            showPaymentMessage('<div class="bg-red-500 text-white font-bold rounded-md p-4 text-center">Pagamento nao concluido (' + data.status + '). Tente novamente.</div>');
-            return;
-          }
-          if(attempts >= MAX_ATTEMPTS){
-            stopped = true;
-            showPaymentMessage('<div class="bg-brand-green-600 border border-brand-green-500 rounded-md p-4 text-center text-sm">Ainda aguardando confirmacao do pagamento. Se voce ja pagou, isso pode levar mais alguns instantes para atualizar.</div>');
-            return;
-          }
-          setTimeout(tick, 5000);
-        })
-        .catch(function(){
-          if(attempts >= MAX_ATTEMPTS){ stopped = true; return; }
-          setTimeout(tick, 5000);
-        });
-    }
-    setTimeout(tick, 5000);
-  }
-
-  function renderPix(pix, transactionId){
-    var img = pix && (pix.base64 ? ('data:image/png;base64,' + pix.base64) : pix.image);
-    var code = (pix && pix.code) || '';
-    var html = ''
-      + '<div class="bg-brand-green-600 rounded-md p-4 flex flex-col items-center gap-3">'
-      +   '<p class="text-sm font-bold">Escaneie o QR Code ou copie o codigo Pix</p>'
-      +   (img ? '<img src="' + img + '" alt="QR Code Pix" class="w-40 h-40 bg-white p-1 rounded" />' : '')
-      +   '<textarea readonly class="w-full text-xs p-2 rounded-md bg-brand-green-800 border border-brand-green-500" rows="3">' + code + '</textarea>'
-      +   '<button type="button" id="pixCopyBtn" class="items-center justify-center rounded-md text-sm h-10 px-4 py-2 bg-brand-green-300 hover:bg-brand-green-100 text-zinc-900 font-bold w-full">Copiar codigo Pix</button>'
-      +   '<p id="pixStatusText" class="text-xs text-zinc-300">Aguardando confirmacao do pagamento...</p>'
-      + '</div>';
-    showPaymentMessage(html);
-    var copyBtn = document.getElementById('pixCopyBtn');
-    if(copyBtn){
-      copyBtn.addEventListener('click', function(){
-        if(navigator.clipboard) navigator.clipboard.writeText(code);
-        copyBtn.textContent = 'Codigo copiado!';
-        setTimeout(function(){ copyBtn.textContent = 'Copiar codigo Pix'; }, 2000);
-      });
-    }
-    pollStatus(transactionId);
   }
 
   function showFormError(msg){
@@ -241,16 +159,24 @@
     })
     .then(function(r){ return r.json().then(function(data){ return {ok: r.ok, data: data}; }); })
     .then(function(res){
-      if(btn){ btn.disabled = false; btn.style.opacity = ''; }
       if(!res.ok || !res.data.pix){
-        showPaymentMessage('<div class="bg-red-500 text-white font-bold rounded-md p-4 text-center">' + (res.data.message || 'Nao foi possivel gerar o Pix. Tente novamente.') + '</div>');
+        if(btn){ btn.disabled = false; btn.style.opacity = ''; }
+        showFormError((res.data && res.data.message) || 'Nao foi possivel gerar o Pix. Tente novamente.');
         return;
       }
-      renderPix(res.data.pix, res.data.transactionId);
+      try {
+        sessionStorage.setItem('pixPagamento', JSON.stringify({
+          transactionId: res.data.transactionId,
+          pix: res.data.pix,
+          produtoNome: produtoRaw.nome,
+          preco: produtoRaw.preco
+        }));
+      } catch(e){}
+      window.location.href = 'pagamento.html';
     })
     .catch(function(){
       if(btn){ btn.disabled = false; btn.style.opacity = ''; }
-      showPaymentMessage('<div class="bg-red-500 text-white font-bold rounded-md p-4 text-center">Falha de conexao. Tente novamente.</div>');
+      showFormError('Falha de conexao. Tente novamente.');
     });
   }
 

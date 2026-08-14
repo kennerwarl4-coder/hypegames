@@ -1,6 +1,7 @@
 'use strict';
 
 const { randomUUID } = require('crypto');
+const QRCode = require('qrcode');
 const { getProductById } = require('../_lib/products');
 const { createPixCharge, SigilopayError } = require('../_lib/sigilopay');
 
@@ -74,10 +75,32 @@ async function handleCreate(req, res) {
     return sendError(res, 500, 'INTERNAL_ERROR', 'Erro inesperado ao criar a cobrança.');
   }
 
+  const pix = result.pix || {};
+
+  // Geramos o QR Code nós mesmos a partir do código copia-e-cola, em vez de
+  // depender de `pix.image`/`pix.base64` da SigiloPay (na prática, vêm vazios
+  // nesta conta). Isso garante que o QR sempre aparece, independente do que
+  // o gateway devolver.
+  let qrImage = null;
+  if (pix.code) {
+    try {
+      qrImage = await QRCode.toDataURL(pix.code, { margin: 1, width: 320 });
+    } catch (err) {
+      console.error('Falha ao gerar QR Code local', err);
+    }
+  }
+
+  let qrToSend = qrImage;
+  if (!qrToSend && pix.base64) qrToSend = 'data:image/png;base64,' + pix.base64;
+  if (!qrToSend && pix.image) qrToSend = pix.image;
+
   return res.status(201).json({
     identifier: identifier,
     transactionId: result.transactionId,
     status: result.status,
-    pix: result.pix
+    pix: {
+      code: pix.code || null,
+      qrImage: qrToSend || null
+    }
   });
 }
