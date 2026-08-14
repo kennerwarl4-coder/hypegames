@@ -9,6 +9,23 @@ function sendError(res, status, errorCode, message, details) {
   res.status(status).json({ statusCode: status, errorCode: errorCode, message: message, details: details || null });
 }
 
+// Padrão mais comum de nomes de campo pra atribuição de campanha
+// (metadata.utm_*). Nunca confirmado com a doc específica da integração
+// SigiloPay<->Utmify — se a Utmify não reconhecer, é o primeiro lugar a checar.
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+
+function sanitizeUtm(raw) {
+  if (!raw || typeof raw !== 'object') return {};
+  const out = {};
+  UTM_KEYS.forEach(function (key) {
+    const value = raw[key];
+    if (typeof value === 'string' && value.trim()) {
+      out[key] = value.trim().slice(0, 200);
+    }
+  });
+  return out;
+}
+
 module.exports = async function handler(req, res) {
   try {
     return await handleCreate(req, res);
@@ -29,6 +46,7 @@ async function handleCreate(req, res) {
   const body = req.body || {};
   const produtoId = body.produtoId;
   const client = body.client || {};
+  const utm = sanitizeUtm(body.utm);
 
   if (!produtoId) {
     return sendError(res, 400, 'GATEWAY_INVALID_ARGUMENT', 'produtoId é obrigatório.');
@@ -64,7 +82,7 @@ async function handleCreate(req, res) {
         document: client.document
       },
       products: [{ id: produto.id, name: produto.nome, quantity: 1, price: amount }],
-      metadata: { orderId: identifier, provider: 'HyperGamesCheckout' },
+      metadata: Object.assign({ orderId: identifier, provider: 'HyperGamesCheckout' }, utm),
       callbackUrl: callbackUrl || undefined
     });
   } catch (err) {

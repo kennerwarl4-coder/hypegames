@@ -2964,6 +2964,18 @@
 </script>
 <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1378223596976779&ev=PageView&noscript=1" /></noscript>
+<script>(function(){
+  try{
+    var params = new URLSearchParams(window.location.search);
+    var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+    var hasAny = keys.some(function(k){ return params.has(k); });
+    if(hasAny){
+      var utm = {};
+      keys.forEach(function(k){ utm[k] = params.get(k) || ''; });
+      localStorage.setItem('hg_utm', JSON.stringify(utm));
+    }
+  }catch(e){}
+})();</script>
 <style>
   img[src="data:,"],
   source[src="data:,"] {
