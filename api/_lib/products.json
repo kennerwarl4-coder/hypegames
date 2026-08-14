@@ -48,46 +48,94 @@
     "precoOriginalCents": 30000
   },
   {
+    "id": "20646",
+    "nome": "R$150 Gift Card PlayStation Store - Cartão Presente [Exclusivo Brasil]",
+    "precoCents": 7500,
+    "precoOriginalCents": 15000
+  },
+  {
+    "id": "20645",
+    "nome": "R$300 Gift Card PlayStation Store - Cartão Presente [Exclusivo Brasil]",
+    "precoCents": 15000,
+    "precoOriginalCents": 30000
+  },
+  {
+    "id": "22078",
+    "nome": "R$360 Gift Card PlayStation Store - Cartão Presente [Exclusivo Brasil]",
+    "precoCents": 18000,
+    "precoOriginalCents": 36000
+  },
+  {
+    "id": "20649",
+    "nome": "R$450 Gift Card PlayStation Store - Cartão Presente [Exclusivo Brasil]",
+    "precoCents": 22500,
+    "precoOriginalCents": 45000
+  },
+  {
     "id": "27710",
     "nome": "Gift Card Outback - R$300",
     "precoCents": 13500,
-    "precoOriginalCents": 27000
+    "precoOriginalCents": 30000
   },
   {
     "id": "27709",
     "nome": "Gift Card Outback - R$200",
     "precoCents": 9000,
-    "precoOriginalCents": 18000
+    "precoOriginalCents": 20000
   },
   {
     "id": "27708",
     "nome": "Gift Card Outback - R$150",
     "precoCents": 6750,
-    "precoOriginalCents": 13500
+    "precoOriginalCents": 15000
   },
   {
     "id": "27707",
     "nome": "Gift Card Outback - R$100",
     "precoCents": 4500,
-    "precoOriginalCents": 9000
+    "precoOriginalCents": 10000
+  },
+  {
+    "id": "29127",
+    "nome": "Marvel's Wolverine - [PlayStation]",
+    "precoCents": 20000,
+    "precoOriginalCents": 40000
+  },
+  {
+    "id": "29128",
+    "nome": "007 First Light - [PlayStation]",
+    "precoCents": 15000,
+    "precoOriginalCents": 30000
+  },
+  {
+    "id": "28022",
+    "nome": "LEGO Batman: O Legado do Cavaleiro das Trevas [PlayStation]",
+    "precoCents": 15000,
+    "precoOriginalCents": 30000
+  },
+  {
+    "id": "28023",
+    "nome": "Crimson Desert [PlayStation]",
+    "precoCents": 17500,
+    "precoOriginalCents": 35000
   },
   {
     "id": "28017",
     "nome": "Microsoft Xbox Game Pass Essential 6M",
     "precoCents": 8320,
-    "precoOriginalCents": 16641
+    "precoOriginalCents": 18490
   },
   {
     "id": "28020",
     "nome": "Microsoft Xbox Game Pass Essential 12M",
     "precoCents": 16196,
-    "precoOriginalCents": 32391
+    "precoOriginalCents": 35990
   },
   {
     "id": "28015",
     "nome": "Microsoft Xbox Game Pass Premium 3M",
     "precoCents": 8095,
-    "precoOriginalCents": 16191
+    "precoOriginalCents": 17990
   },
   {
     "id": "28013",
@@ -99,96 +147,120 @@
     "id": "21745",
     "nome": "Recarga Free Fire - 1.060 Diamantes +10% de Bônus",
     "precoCents": 2137,
-    "precoOriginalCents": 4274
+    "precoOriginalCents": 4499
   },
   {
     "id": "21746",
     "nome": "Recarga Free Fire - 2.180 Diamantes +10% de Bônus",
     "precoCents": 4180,
-    "precoOriginalCents": 8359
+    "precoOriginalCents": 8799
   },
   {
     "id": "21747",
     "nome": "Recarga Free Fire - 5.600 Diamantes +10% de Bônus",
     "precoCents": 9975,
-    "precoOriginalCents": 19949
+    "precoOriginalCents": 20999
   },
   {
     "id": "27992",
     "nome": "Recarga Free Fire - 22.400 Diamantes +10% de Bônus",
     "precoCents": 39898,
-    "precoOriginalCents": 79796
+    "precoOriginalCents": 83996
   },
   {
     "id": "27326",
     "nome": "Clair Obscur: Expedition 33",
     "precoCents": 5945,
-    "precoOriginalCents": 11890
+    "precoOriginalCents": 19900
   },
   {
     "id": "26630",
     "nome": "HELLDIVERS™ 2",
     "precoCents": 6145,
-    "precoOriginalCents": 12290
+    "precoOriginalCents": 19950
   },
   {
     "id": "26093",
     "nome": "Scorn",
     "precoCents": 545,
-    "precoOriginalCents": 1090
+    "precoOriginalCents": 7599
   },
   {
     "id": "27422",
     "nome": "REMATCH",
     "precoCents": 1780,
-    "precoOriginalCents": 3560
+    "precoOriginalCents": 8900
+  },
+  {
+    "id": "21387",
+    "nome": "R$250 Nintendo eShop - Cartão Presente",
+    "precoCents": 12500,
+    "precoOriginalCents": 25000
+  },
+  {
+    "id": "21388",
+    "nome": "R$300 Nintendo eShop - Cartão Presente",
+    "precoCents": 15000,
+    "precoOriginalCents": 30000
+  },
+  {
+    "id": "26889",
+    "nome": "R$400 Nintendo eShop - Cartão Presente",
+    "precoCents": 20000,
+    "precoOriginalCents": 40000
+  },
+  {
+    "id": "26890",
+    "nome": "R$500 Nintendo eShop - Cartão Presente",
+    "precoCents": 25000,
+    "precoOriginalCents": 50000
   },
   {
     "id": "26698",
     "nome": "R$20 League of Legends - PC - Cartão Presente Digital [Exclusivo Brasil]",
     "precoCents": 960,
-    "precoOriginalCents": 1920
+    "precoOriginalCents": 2000
   },
   {
     "id": "26694",
     "nome": "R$50 League of Legends - PC -Cartão Presente Digital [Exclusivo Brasil]",
     "precoCents": 2400,
-    "precoOriginalCents": 4800
+    "precoOriginalCents": 5000
   },
   {
     "id": "26696",
     "nome": "R$50 Valorant - Cartão Presente Digital [Exclusivo Brasil]",
     "precoCents": 2400,
-    "precoOriginalCents": 4800
+    "precoOriginalCents": 5000
   },
   {
     "id": "26703",
     "nome": "R$40 Roblox - Cartão Presente Digital [Exclusivo Brasil]",
     "precoCents": 1900,
-    "precoOriginalCents": 3800
+    "precoOriginalCents": 4000
   },
   {
     "id": "19647",
     "nome": "Tom Clancy's Ghost Recon Wildlands - Standard Edition",
     "precoCents": 600,
-    "precoOriginalCents": 1199
+    "precoOriginalCents": 24895
   },
   {
     "id": "20226",
     "nome": "Tom Clancy's Ghost Recon Breakpoint - Standard Edition",
     "precoCents": 447,
-    "precoOriginalCents": 895
+    "precoOriginalCents": 17900
   },
   {
     "id": "19753",
     "nome": "FAR CRY 3 - Standard Edition",
     "precoCents": 750,
-    "precoOriginalCents": 1500
+    "precoOriginalCents": 5999
   },
   {
     "id": "19301",
     "nome": "Far Cry 5 - Gold Edition",
     "precoCents": 1950,
-    "precoOriginalCents": 3900
+    "precoOriginalCents": 25999
   }
 ]
